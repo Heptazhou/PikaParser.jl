@@ -1,7 +1,7 @@
 
 @testset "Run example from README" begin
 
-    rules = Dict(
+    rules = OrderedDict(
         :digits => P.some(:digit => P.satisfy(isdigit)),
         :parens => P.seq(
             P.token('('),

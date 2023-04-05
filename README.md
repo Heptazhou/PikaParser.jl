@@ -26,7 +26,7 @@ labels for your grammar rules -- Julia symbols are a natural choice, but you
 are free to use integers, strings, or anything else.
 
 ```julia
-rules = Dict(
+rules = OrderedDict(
     # match a sequence of characters that satisfies `isdigit`
     :digits => P.some(:digit => P.satisfy(isdigit)),
 

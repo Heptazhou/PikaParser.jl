@@ -1,5 +1,6 @@
 
 import PikaParser as P
+using OrderedCollections: OrderedDict
 using Test
 
 @testset "PikaParser tests" begin

@@ -1,6 +1,6 @@
 
 @testset "FollowedBy-style clauses" begin
-    rules = Dict(
+    rules = OrderedDict(
         "seq" => P.many(P.first(P.fail, "a", "b")),
         "a" => P.seq(P.token(1), P.epsilon, P.not_followed_by(P.token(1))),
         "b" => P.seq(P.token(2), P.followed_by(P.token(1))),
@@ -42,7 +42,7 @@
 end
 
 @testset "Multiple token matches" begin
-    rules = Dict(
+    rules = OrderedDict(
         3 => P.first(
             11 => P.scan(toks -> length(toks) >= 2 && toks[1] == toks[2] ? 2 : 0),
             P.tokens([:one, :two, :three]),
@@ -61,7 +61,7 @@ end
 end
 
 @testset "Tie" begin
-    rules = Dict(
+    rules = OrderedDict(
         :item => P.satisfy(x -> isdigit(x) || isletter(x)),
         :sep => P.token(','),
         :list => P.tie(P.seq(P.seq(:item), P.many(:sepitem => P.seq(:sep, :item)))),
@@ -85,7 +85,7 @@ end
 end
 
 @testset "Flatten complains about duplicates" begin
-    rules = Dict(:x => P.seq(:x => P.fail))
+    rules = OrderedDict(:x => P.seq(:x => P.fail))
 
     @test_throws DomainError P.flatten(rules, Char)
 end
@@ -93,7 +93,7 @@ end
 @testset "Corner-case epsilon matches" begin
     str = "whateveρ"
 
-    rules = Dict(:x => P.followed_by(P.epsilon))
+    rules = OrderedDict(:x => P.followed_by(P.epsilon))
 
     p = P.parse(P.make_grammar([:x], P.flatten(rules, Char)), str)
 
@@ -103,12 +103,12 @@ end
     @test P.find_match_at!(p, :x, 1) == P.find_match_at!(p, :x, 1)
 
     # tie epsilon match
-    rules = Dict(:x => P.tie(P.epsilon))
+    rules = OrderedDict(:x => P.tie(P.epsilon))
     p = P.parse(P.make_grammar([:x], P.flatten(rules, Char)), str)
 
     @test P.traverse_match(p, P.find_match_at!(p, :x, 1)) == :(x())
 
-    rules = Dict(:x => P.end_of_input)
+    rules = OrderedDict(:x => P.end_of_input)
     p = P.parse(P.make_grammar([:x], P.flatten(rules, Char)), str)
 
     @test P.find_match_at!(p, :x, firstindex(str)) == 0

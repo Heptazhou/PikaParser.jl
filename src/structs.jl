@@ -215,7 +215,7 @@ struct Grammar{G,T}
     names::Vector{G}
 
     "Mapping of rule labels to their indexes in `names`"
-    idx::Dict{G,Int}
+    idx::OrderedDict{G,Int}
 
     "Clauses of the grammar converted to integer labels (and again sorted topologically)"
     clauses::Vector{Clause{Int,T}}

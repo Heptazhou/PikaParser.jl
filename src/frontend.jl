@@ -195,7 +195,7 @@ ruleset.
 
 # Example
 
-    Dict(
+    OrderedDict(
         precedence_cascade(
             n -> Symbol(:exprlevel, n),
             (same, next) -> :expr => first(
@@ -230,7 +230,7 @@ surrounding environment.
 
 # Example
 
-    Dict(
+    OrderedDict(
         @precedences (n->Symbol(:exprlevel, n)) same next begin
             :expr => seq(same, token('+'), next)
             seq(same, token('*'), next)
@@ -296,7 +296,7 @@ function flatten(
     childlabel::Function = (rid, idx) -> Symbol(rid, :-, idx),
 ) where {G}
     todo = Pair{G,Clause}[r for r in rules]
-    res = Dict{G,Clause{G,tokentype}}()
+    res = OrderedDict{G,Clause{G,tokentype}}()
 
     while !isempty(todo)
         rid, clause = pop!(todo)

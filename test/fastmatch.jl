@@ -1,6 +1,6 @@
 
 @testset "Fast matching" begin
-    rules = Dict(
+    rules = OrderedDict(
         :digits => P.some(:digit => P.fail),
         :seq => P.seq(:digits, P.many(:cont => P.seq(:sep => P.fail, :digits))),
     )
@@ -23,7 +23,7 @@
 end
 
 @testset "Lexing" begin
-    rules = Dict(
+    rules = OrderedDict(
         :digits => P.scan(m -> begin
             i = firstindex(m)
             last = prevind(m, i)

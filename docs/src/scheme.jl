@@ -15,7 +15,7 @@
 
 import PikaParser as P
 
-rules = Dict(
+rules = OrderedDict(
     :letter => P.satisfy(isletter),
     :digit => P.satisfy(isdigit),
     :ident => P.tie(

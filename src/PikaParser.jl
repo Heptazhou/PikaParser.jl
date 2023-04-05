@@ -4,6 +4,7 @@ $(README)
 module PikaParser
 
 using DocStringExtensions
+using OrderedCollections: OrderedDict
 
 include("structs.jl")
 include("clauses.jl")

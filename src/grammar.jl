@@ -16,7 +16,7 @@ function make_grammar(
 )::Grammar{G,T} where {G,T}
     rules = collect(rules_dict)
     n_rules = length(rules)
-    rule_idx = Dict{G,Int}(map(Base.first, rules) .=> eachindex(rules))
+    rule_idx = OrderedDict{G,Int}(map(Base.first, rules) .=> eachindex(rules))
 
     # compute the topological ordering
     edges = [child_clauses(r) for (_, r) in rules]
@@ -47,7 +47,7 @@ function make_grammar(
     reordered = rules[topo_order]
 
     # squash clause names to integers
-    name_idx = Dict{G,Int}(rid => topo_order_idx[rule_idx[rid]] for (rid, _) in rules)
+    name_idx = OrderedDict{G,Int}(rid => topo_order_idx[rule_idx[rid]] for (rid, _) in rules)
     clauses = Clause{Int,T}[
         rechildren(cl, T, [name_idx[chcl] for chcl in child_clauses(cl)]) for
         (_, cl) in reordered
@@ -93,7 +93,7 @@ function make_grammar(
 
     Grammar{G,T}(
         Base.first.(reordered),
-        Dict{G,Int}(rid => i for (i, (rid, _)) in enumerate(reordered)),
+        OrderedDict{G,Int}(rid => i for (i, (rid, _)) in enumerate(reordered)),
         clauses,
         emptiable,
         collect.(seed_clauses),

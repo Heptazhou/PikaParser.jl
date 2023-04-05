@@ -17,7 +17,7 @@
 
 import PikaParser as P
 
-rules = Dict(
+rules = OrderedDict(
     :t => P.tokens("true"),
     :f => P.tokens("false"),
     :null => P.tokens("null"),
@@ -45,7 +45,7 @@ rules = Dict(
 
 # To manage the folding easily, we keep the fold functions in a data structure
 # with the same order as `rules`:
-folds = Dict(
+folds = OrderedDict(
     :t => (v, s) -> true,
     :f => (v, s) -> false,
     :null => (v, s) -> nothing,
@@ -59,7 +59,7 @@ folds = Dict(
     :array => (v, s) -> s[2],
     :inarray => (v, s) -> s,
     :separray => (v, s) -> s[2],
-    :obj => (v, s) -> Dict{String,Any}(isnothing(s[2]) ? [] : s[2]),
+    :obj => (v, s) -> OrderedDict{String,Any}(isnothing(s[2]) ? [] : s[2]),
     :pair => (v, s) -> (s[1] => s[3]),
     :sepobj => (v, s) -> s[2],
     :inobj => (v, s) -> s,

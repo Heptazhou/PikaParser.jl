@@ -1,6 +1,6 @@
 
 @testset "Precedence cascades" begin
-    rules = Dict(
+    rules = OrderedDict(
         P.precedence_cascade(
             n -> Symbol(:exprlevel, n),
             (same, next) ->
@@ -59,7 +59,7 @@
 end
 
 @testset "Precedence macro" begin
-    rules = Dict(
+    rules = OrderedDict(
         :parens => P.seq(P.token('('), :expr, P.token(')')),
         P.@precedences (n -> Symbol(:rule, n)) same next begin
             :expr => P.seq(same, P.token('+'), next)
