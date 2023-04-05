@@ -12,7 +12,7 @@ topological order of the parsing).
 """
 function make_grammar(
     starts::AbstractVector{G},
-    rules_dict::Dict{G,Clause{G,T}};
+    rules_dict::AbstractDict{G,Clause{G,T}};
 )::Grammar{G,T} where {G,T}
     rules = collect(rules_dict)
     n_rules = length(rules)

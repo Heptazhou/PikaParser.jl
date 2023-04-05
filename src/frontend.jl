@@ -291,7 +291,7 @@ the rules are labeled by Symbols, and you need to provide your own
 implementation for other grammars labeled e.g. by integers or strings).
 """
 function flatten(
-    rules::Dict{G},
+    rules::AbstractDict{G},
     tokentype::DataType,
     childlabel::Function = (rid, idx) -> Symbol(rid, :-, idx),
 ) where {G}
